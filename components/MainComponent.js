@@ -39,8 +39,6 @@ export default function Main() {
       <Drawer.Navigator initialRouteName="Home">
         <Drawer.Screen name="Home" component={MyStack} />
         <Drawer.Screen name="About" component={About} />
-        {/* <Drawer.Screen name="ScreenTwo" component={ScreenTwo} />
-        <Drawer.Screen name="ScreenFour" component={ScreenFour} /> */}
       </Drawer.Navigator>
     </NavigationContainer>
   );

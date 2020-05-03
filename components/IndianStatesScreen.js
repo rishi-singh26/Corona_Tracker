@@ -20,6 +20,8 @@ import {
 import SegmentedProgressBar from "react-native-segmented-progress-bar";
 import { Button, Icon } from "react-native-elements";
 
+var renderStates = "";
+
 export default class IndianStates extends React.Component {
   constructor(props) {
     super(props);
@@ -135,73 +137,114 @@ export default class IndianStates extends React.Component {
               height={15}
             />
           </View>
-          <View style={{ flex: 1, flexDirection: "column" }}>
-            <View style={{ flex: 1, flexDirection: "row" }}>
+
+          <View style={{ flex: 1, flexDirection: "row" }}>
+            <View
+              style={{
+                flex: 2,
+                marginTop: 15,
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "#fff",
+                padding: 10,
+                borderRadius: 10,
+                margin: 8,
+              }}
+            >
               <View
                 style={{
                   flex: 1,
-                  backgroundColor: "#ff8585",
-                  maxHeight: 20,
-                  minHeight: 20,
-                  maxWidth: 20,
-                  minWidth: 20,
-                  borderRadius: 20,
-                  marginTop: 15,
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
-              ></View>
-              <View style={{ flex: 5 }}>
-                <Text style={{ padding: 10, paddingTop: 15, color: "#111" }}>
-                  Active: {item.active}
-                </Text>
+              >
+                <View style={{ flex: 1 }}>
+                  <Text style={{ color: "#000" }}>Active</Text>
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={{ color: "#ff8585", fontSize: 25 }}>
+                    {item.active}
+                  </Text>
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={{ color: "#ff8585" }}>
+                    + {item.deltaconfirmed} ↑
+                  </Text>
+                </View>
               </View>
             </View>
-            <View style={{ flex: 1, flexDirection: "row" }}>
+            <View
+              style={{
+                flex: 2,
+                marginTop: 15,
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "#fff",
+                borderRadius: 10,
+                padding: 10,
+                margin: 8,
+              }}
+            >
               <View
                 style={{
                   flex: 1,
-                  backgroundColor: "#404040",
-                  maxHeight: 20,
-                  minHeight: 20,
-                  maxWidth: 20,
-                  minWidth: 20,
-                  borderRadius: 20,
-                  marginTop: 15,
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
-              ></View>
-              <View style={{ flex: 5 }}>
-                <Text style={{ padding: 10, paddingTop: 15, color: "#111" }}>
-                  Casualty : {item.deaths}
-                </Text>
+              >
+                <View style={{ flex: 1 }}>
+                  <Text style={{ color: "#000" }}>Casualty</Text>
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={{ color: "#000", fontSize: 25 }}>
+                    {item.deaths}
+                  </Text>
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={{ color: "#404040" }}>
+                    + {item.deltadeaths} ↑
+                  </Text>
+                </View>
               </View>
             </View>
-            <View style={{ flex: 1, flexDirection: "row" }}>
+
+            <View
+              style={{
+                flex: 2,
+                marginTop: 15,
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "#fff",
+                padding: 10,
+                borderRadius: 10,
+                margin: 8,
+              }}
+            >
               <View
                 style={{
                   flex: 1,
-                  backgroundColor: "#1e72fa",
-                  maxHeight: 20,
-                  minHeight: 20,
-                  maxWidth: 20,
-                  minWidth: 20,
-                  borderRadius: 20,
-                  marginTop: 15,
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
-              ></View>
-              <View style={{ flex: 5 }}>
-                <Text style={{ padding: 10, paddingTop: 15, color: "#111" }}>
-                  Recovered : {item.recovered}
-                </Text>
+              >
+                <View style={{ flex: 1 }}>
+                  <Text style={{ color: "#000" }}>Recovered</Text>
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={{ color: "#1e72fa", fontSize: 25 }}>
+                    {item.recovered}
+                  </Text>
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={{ color: "#1e72fa" }}>
+                    + {item.deltarecovered} ↑
+                  </Text>
+                </View>
               </View>
             </View>
-            <Text style={{ padding: 10, paddingTop: 15, color: "#111" }}>
-              New Cases Today :{item.deltaconfirmed}
-            </Text>
-            <Text style={{ padding: 10, paddingTop: 15, color: "#111" }}>
-              New Casualties Today :{item.deltadeaths}
-            </Text>
-            <Text style={{ padding: 10, paddingTop: 15, color: "#111" }}>
-              New Recoveries Today :{item.deltarecovered}
-            </Text>
           </View>
 
           {Number(item.active) +
@@ -226,7 +269,7 @@ export default class IndianStates extends React.Component {
             0 && (
             <View style={{ padding: 10 }}>
               <Button
-                title="Search District Data"
+                title="District Data"
                 buttonStyle={{ backgroundColor: "#1e72fa", borderRadius: 20 }}
                 onPress={() => {
                   this.props.navigation.navigate("IndianDistricts", {
@@ -333,7 +376,7 @@ export default class IndianStates extends React.Component {
                   color: "#000",
                 }}
               >
-                Loading
+                {" "}
               </Text>
             </View>
           )}

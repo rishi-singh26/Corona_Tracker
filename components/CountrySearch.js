@@ -38,26 +38,28 @@ export default class CountrySearch extends React.Component {
   }
 
   updateSearch = (searchKey) => {
-    // let { current: field } = this.fieldRef;
+    if (searchKey.length > 0) {
+      this.setState({ isSearching: true }, () => {
+        const { countryData } = this.props.route.params;
+        var newSearchResults = [];
 
-    // console.log(field.value());
-    // searchKey = field.value();
-
-    this.setState({ isSearching: true }, () => {
-      const { countryData } = this.props.route.params;
-      var newSearchResults = [];
-
-      countryData.map((item, index) => {
-        if (
-          searchKey.toUpperCase().includes(item.name.toUpperCase()) ||
-          item.name.toUpperCase().includes(searchKey.toUpperCase())
-        ) {
-          newSearchResults.push(item);
-        }
+        countryData.map((item, index) => {
+          if (
+            searchKey.toUpperCase().includes(item.name.toUpperCase()) ||
+            item.name.toUpperCase().includes(searchKey.toUpperCase())
+          ) {
+            newSearchResults.push(item);
+          }
+        });
+        this.setState({
+          searchResutls: newSearchResults,
+          isSearching: false,
+          searchKey: searchKey,
+        });
       });
-      this.setState({ searchResutls: newSearchResults, isSearching: false });
-      console.log(newSearchResults);
-    });
+    } else {
+      this.setState({ searchKey: searchKey, searchResutls: [] });
+    }
   };
 
   render() {
@@ -113,78 +115,120 @@ export default class CountrySearch extends React.Component {
                 height={15}
               />
             </View>
+            <View style={{ flex: 1, flexDirection: "row" }}>
+              <View
+                style={{
+                  flex: 2,
+                  marginTop: 15,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: "#fff",
+                  padding: 10,
+                  borderRadius: 10,
+                  margin: 8,
+                }}
+              >
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <View style={{ flex: 1 }}>
+                    <Text style={{ color: "#000" }}>Active</Text>
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Text style={{ color: "#ff8585", fontSize: 25 }}>
+                      {item.latest_data.confirmed -
+                        item.latest_data.recovered -
+                        item.latest_data.deaths}
+                    </Text>
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Text style={{ color: "#ff8585" }}>
+                      + {item.today.confirmed} ↑
+                    </Text>
+                  </View>
+                </View>
+              </View>
+              <View
+                style={{
+                  flex: 2,
+                  marginTop: 15,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: "#fff",
+                  borderRadius: 10,
+                  padding: 10,
+                  margin: 8,
+                }}
+              >
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <View style={{ flex: 1 }}>
+                    <Text style={{ color: "#000" }}>Casualty</Text>
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Text style={{ color: "#000", fontSize: 25 }}>
+                      {item.latest_data.deaths}
+                    </Text>
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Text style={{ color: "#404040" }}>
+                      + {item.today.deaths} ↑
+                    </Text>
+                  </View>
+                </View>
+              </View>
+
+              <View
+                style={{
+                  flex: 2,
+                  marginTop: 15,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: "#fff",
+                  padding: 10,
+                  borderRadius: 10,
+                  margin: 8,
+                }}
+              >
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <View style={{ flex: 1 }}>
+                    <Text style={{ color: "#000" }}>Recovered</Text>
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Text style={{ color: "#1e72fa", fontSize: 25 }}>
+                      {item.latest_data.recovered}
+                    </Text>
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Text style={{ color: "#1e72fa" }}>{""}</Text>
+                  </View>
+                </View>
+              </View>
+            </View>
             <View style={{ flex: 1, flexDirection: "column" }}>
-              <View style={{ flex: 1, flexDirection: "row" }}>
-                <View
-                  style={{
-                    flex: 1,
-                    backgroundColor: "#ff8585",
-                    maxHeight: 20,
-                    minHeight: 20,
-                    maxWidth: 20,
-                    minWidth: 20,
-                    borderRadius: 20,
-                    marginTop: 15,
-                  }}
-                ></View>
-                <View style={{ flex: 5 }}>
-                  <Text style={{ padding: 10, paddingTop: 15, color: "#111" }}>
-                    Active:{" "}
-                    {item.latest_data.confirmed -
-                      item.latest_data.recovered -
-                      item.latest_data.deaths}
-                  </Text>
-                </View>
-              </View>
-              <View style={{ flex: 1, flexDirection: "row" }}>
-                <View
-                  style={{
-                    flex: 1,
-                    backgroundColor: "#404040",
-                    maxHeight: 20,
-                    minHeight: 20,
-                    maxWidth: 20,
-                    minWidth: 20,
-                    borderRadius: 20,
-                    marginTop: 15,
-                  }}
-                ></View>
-                <View style={{ flex: 5 }}>
-                  <Text style={{ padding: 10, paddingTop: 15, color: "#111" }}>
-                    Casualty : {item.latest_data.deaths}
-                  </Text>
-                </View>
-              </View>
-              <View style={{ flex: 1, flexDirection: "row" }}>
-                <View
-                  style={{
-                    flex: 1,
-                    backgroundColor: "#1e72fa",
-                    maxHeight: 20,
-                    minHeight: 20,
-                    maxWidth: 20,
-                    minWidth: 20,
-                    borderRadius: 20,
-                    marginTop: 15,
-                  }}
-                ></View>
-                <View style={{ flex: 5 }}>
-                  <Text style={{ padding: 10, paddingTop: 15, color: "#111" }}>
-                    Recovered : {item.latest_data.recovered}
-                  </Text>
-                </View>
-              </View>
-              <Text style={{ padding: 10, paddingTop: 15, color: "#111" }}>
-                New Cases Today :{item.today.confirmed}
-              </Text>
-              <Text style={{ padding: 10, paddingTop: 15, color: "#111" }}>
-                New Casualties Today :{item.today.deaths}
-              </Text>
               <Text style={{ padding: 10, paddingTop: 15, color: "#111" }}>
                 Casualty Rate :{item.latest_data.calculated.death_rate}
               </Text>
               <Text style={{ padding: 10, paddingTop: 15, color: "#111" }}>
-                Recovered Rate :{item.latest_data.calculated.recovery_rate}
+                Recovery Rate :{item.latest_data.calculated.recovery_rate}
               </Text>
               <Text style={{ padding: 10, paddingTop: 15, color: "#111" }}>
                 Cases per million population :
@@ -236,16 +280,9 @@ export default class CountrySearch extends React.Component {
               lightTheme={true}
               placeholder="Type Here..."
               onChangeText={this.updateSearch}
-              on
               value={searchKey}
+              autoFocus={true}
             />
-            {/* <OutlinedTextField
-              label="Phone number"
-              keyboardType="default"
-              formatText={this.formatText}
-              onSubmitEditing={this.updateSearch}
-              ref={this.fieldRef}
-            /> */}
           </View>
           {this.state.isSearching ? (
             <View

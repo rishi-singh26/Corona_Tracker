@@ -26,7 +26,6 @@ export default class Countries extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      search: "",
       countries: [],
       isLoading: false,
     };
@@ -42,7 +41,7 @@ export default class Countries extends React.Component {
     this.loadCountryData();
   };
 
-  loadCountryData = () => {
+  loadCountryData = async () => {
     this.setState({ isLoading: true }, () => {
       fetch("https://corona-api.com/countries")
         .then((response) => response.json())
@@ -57,10 +56,6 @@ export default class Countries extends React.Component {
           this.setState({ err: true });
         });
     });
-  };
-
-  updateSearch = (search) => {
-    this.setState({ search });
   };
 
   render() {
@@ -97,7 +92,7 @@ export default class Countries extends React.Component {
               Total Cases {item.latest_data.confirmed}
             </Text>
           </Text>
-          <View
+          {/* <View
             style={{
               marginTop: 20,
               backgroundColor: "#bdc6cf",
@@ -118,74 +113,117 @@ export default class Countries extends React.Component {
               colors={["#ff8585", "#404040", "#1e72fa"]}
               height={15}
             />
+          </View> */}
+
+          <View style={{ flex: 1, flexDirection: "row" }}>
+            <View
+              style={{
+                flex: 2,
+                marginTop: 15,
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "#fff",
+                padding: 10,
+                borderRadius: 10,
+                margin: 8,
+              }}
+            >
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <View style={{ flex: 1 }}>
+                  <Text style={{ color: "#000" }}>Active</Text>
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={{ color: "#ff8585", fontSize: 25 }}>
+                    {item.latest_data.confirmed -
+                      item.latest_data.recovered -
+                      item.latest_data.deaths}
+                  </Text>
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={{ color: "#ff8585" }}>
+                    + {item.today.confirmed} ↑
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View
+              style={{
+                flex: 2,
+                marginTop: 15,
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "#fff",
+                borderRadius: 10,
+                padding: 10,
+                margin: 8,
+              }}
+            >
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <View style={{ flex: 1 }}>
+                  <Text style={{ color: "#000" }}>Casualty</Text>
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={{ color: "#000", fontSize: 25 }}>
+                    {item.latest_data.deaths}
+                  </Text>
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={{ color: "#404040" }}>
+                    + {item.today.deaths} ↑
+                  </Text>
+                </View>
+              </View>
+            </View>
+
+            <View
+              style={{
+                flex: 2,
+                marginTop: 15,
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "#fff",
+                padding: 10,
+                borderRadius: 10,
+                margin: 8,
+              }}
+            >
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <View style={{ flex: 1 }}>
+                  <Text style={{ color: "#000" }}>Recovered</Text>
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={{ color: "#1e72fa", fontSize: 25 }}>
+                    {item.latest_data.recovered}
+                  </Text>
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={{ color: "#1e72fa" }}>{""}</Text>
+                </View>
+              </View>
+            </View>
           </View>
           <View style={{ flex: 1, flexDirection: "column" }}>
-            <View style={{ flex: 1, flexDirection: "row" }}>
-              <View
-                style={{
-                  flex: 1,
-                  backgroundColor: "#ff8585",
-                  maxHeight: 20,
-                  minHeight: 20,
-                  maxWidth: 20,
-                  minWidth: 20,
-                  borderRadius: 20,
-                  marginTop: 15,
-                }}
-              ></View>
-              <View style={{ flex: 5 }}>
-                <Text style={{ padding: 10, paddingTop: 15, color: "#111" }}>
-                  Active:{" "}
-                  {item.latest_data.confirmed -
-                    item.latest_data.recovered -
-                    item.latest_data.deaths}
-                </Text>
-              </View>
-            </View>
-            <View style={{ flex: 1, flexDirection: "row" }}>
-              <View
-                style={{
-                  flex: 1,
-                  backgroundColor: "#404040",
-                  maxHeight: 20,
-                  minHeight: 20,
-                  maxWidth: 20,
-                  minWidth: 20,
-                  borderRadius: 20,
-                  marginTop: 15,
-                }}
-              ></View>
-              <View style={{ flex: 5 }}>
-                <Text style={{ padding: 10, paddingTop: 15, color: "#111" }}>
-                  Casualty : {item.latest_data.deaths}
-                </Text>
-              </View>
-            </View>
-            <View style={{ flex: 1, flexDirection: "row" }}>
-              <View
-                style={{
-                  flex: 1,
-                  backgroundColor: "#1e72fa",
-                  maxHeight: 20,
-                  minHeight: 20,
-                  maxWidth: 20,
-                  minWidth: 20,
-                  borderRadius: 20,
-                  marginTop: 15,
-                }}
-              ></View>
-              <View style={{ flex: 5 }}>
-                <Text style={{ padding: 10, paddingTop: 15, color: "#111" }}>
-                  Recovered : {item.latest_data.recovered}
-                </Text>
-              </View>
-            </View>
-            <Text style={{ padding: 10, paddingTop: 15, color: "#111" }}>
-              New Cases Today :{item.today.confirmed}
-            </Text>
-            <Text style={{ padding: 10, paddingTop: 15, color: "#111" }}>
-              New Casualties Today :{item.today.deaths}
-            </Text>
             <Text style={{ padding: 10, paddingTop: 15, color: "#111" }}>
               Casualty Rate :
               {Number(item.latest_data.calculated.death_rate).toFixed(2)}
@@ -208,7 +246,7 @@ export default class Countries extends React.Component {
     return (
       <SafeAreaView>
         <ScrollView
-          showsVerticalScrollIndicator={false}
+          //   showsVerticalScrollIndicator={false}
           style={{ backgroundColor: "#fff" }}
           stickyHeaderIndices={[0]}
           refreshControl={
@@ -279,12 +317,6 @@ export default class Countries extends React.Component {
                 </TouchableOpacity>
               </View>
             </View>
-            {/* <SearchBar
-              lightTheme={true}
-              placeholder="Type Here..."
-              onChangeText={this.updateSearch}
-              value={search}
-            /> */}
           </View>
           {this.state.isLoading && (
             <View
@@ -299,7 +331,7 @@ export default class Countries extends React.Component {
                   color: "#000",
                 }}
               >
-                Loading
+                {" "}
               </Text>
             </View>
           )}

@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "HelloWorld",
-    "slug": "Corona",
+    "name": "Corona Tracker",
+    "slug": "corona_tracker",
     "platforms": ["ios", "android", "web"],
     "androidStatusBar": {
       "backgroundColor": "#000"
@@ -20,6 +20,10 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "android": {
+      "package": "com.ravan.corona_tracker"
+    },
+    "description": "Corona analytics tracking app."
   }
 }

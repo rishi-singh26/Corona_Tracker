@@ -38,32 +38,34 @@ export default class CountrySearch extends React.Component {
   }
 
   updateSearch = (searchKey) => {
-    // let { current: field } = this.fieldRef;
-
-    // console.log(field.value());
-    // searchKey = field.value();
-
-    this.setState({ isSearching: true }, () => {
+    if (searchKey.length > 0) {
       const { districtData } = this.props.route.params;
       const { arrayOfDistrictNames } = this.props.route.params;
-      var newSearchResults = [];
+      this.setState({ isSearching: true }, () => {
+        var newSearchResults = [];
 
-      districtData.map((item, index) => {
-        if (
-          searchKey
-            .toUpperCase()
-            .includes(arrayOfDistrictNames[index].toUpperCase()) ||
-          arrayOfDistrictNames[index]
-            .toUpperCase()
-            .includes(searchKey.toUpperCase())
-        ) {
-          item.districtName = arrayOfDistrictNames[index];
-          newSearchResults.push(item);
-        }
+        districtData.map((item, index) => {
+          if (
+            searchKey
+              .toUpperCase()
+              .includes(arrayOfDistrictNames[index].toUpperCase()) ||
+            arrayOfDistrictNames[index]
+              .toUpperCase()
+              .includes(searchKey.toUpperCase())
+          ) {
+            item.districtName = arrayOfDistrictNames[index];
+            newSearchResults.push(item);
+          }
+        });
+        this.setState({
+          searchResutls: newSearchResults,
+          isSearching: false,
+          searchKey: searchKey,
+        });
       });
-      this.setState({ searchResutls: newSearchResults, isSearching: false });
-      console.log(newSearchResults);
-    });
+    } else {
+      this.setState({ searchKey: searchKey, searchResutls: [] });
+    }
   };
 
   render() {
@@ -120,73 +122,114 @@ export default class CountrySearch extends React.Component {
                 // position={21}
               />
             </View>
-            <View style={{ flex: 1, flexDirection: "column" }}>
-              <View style={{ flex: 1, flexDirection: "row" }}>
+
+            <View style={{ flex: 1, flexDirection: "row" }}>
+              <View
+                style={{
+                  flex: 2,
+                  marginTop: 15,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: "#fff",
+                  padding: 10,
+                  borderRadius: 10,
+                  margin: 8,
+                }}
+              >
                 <View
                   style={{
                     flex: 1,
-                    backgroundColor: "#ff8585",
-                    maxHeight: 20,
-                    minHeight: 20,
-                    maxWidth: 20,
-                    minWidth: 20,
-                    borderRadius: 20,
-                    marginTop: 15,
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
-                ></View>
-                <View style={{ flex: 5 }}>
-                  <Text style={{ padding: 10, paddingTop: 15, color: "#111" }}>
-                    Active: {item.active}
-                  </Text>
+                >
+                  <View style={{ flex: 1 }}>
+                    <Text style={{ color: "#000" }}>Active</Text>
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Text style={{ color: "#ff8585", fontSize: 25 }}>
+                      {item.active}
+                    </Text>
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Text style={{ color: "#ff8585" }}>
+                      + {item.delta.confirmed} ↑
+                    </Text>
+                  </View>
                 </View>
               </View>
-              <View style={{ flex: 1, flexDirection: "row" }}>
+              <View
+                style={{
+                  flex: 2,
+                  marginTop: 15,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: "#fff",
+                  borderRadius: 10,
+                  padding: 10,
+                  margin: 8,
+                }}
+              >
                 <View
                   style={{
                     flex: 1,
-                    backgroundColor: "#404040",
-                    maxHeight: 20,
-                    minHeight: 20,
-                    maxWidth: 20,
-                    minWidth: 20,
-                    borderRadius: 20,
-                    marginTop: 15,
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
-                ></View>
-                <View style={{ flex: 5 }}>
-                  <Text style={{ padding: 10, paddingTop: 15, color: "#111" }}>
-                    Casualty : {item.deceased}
-                  </Text>
+                >
+                  <View style={{ flex: 1 }}>
+                    <Text style={{ color: "#000" }}>Casualty</Text>
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Text style={{ color: "#000", fontSize: 25 }}>
+                      {item.deceased}
+                    </Text>
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Text style={{ color: "#404040" }}>
+                      + {item.delta.deceased} ↑
+                    </Text>
+                  </View>
                 </View>
               </View>
-              <View style={{ flex: 1, flexDirection: "row" }}>
+
+              <View
+                style={{
+                  flex: 2,
+                  marginTop: 15,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: "#fff",
+                  padding: 10,
+                  borderRadius: 10,
+                  margin: 8,
+                }}
+              >
                 <View
                   style={{
                     flex: 1,
-                    backgroundColor: "#1e72fa",
-                    maxHeight: 20,
-                    minHeight: 20,
-                    maxWidth: 20,
-                    minWidth: 20,
-                    borderRadius: 20,
-                    marginTop: 15,
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
-                ></View>
-                <View style={{ flex: 5 }}>
-                  <Text style={{ padding: 10, paddingTop: 15, color: "#111" }}>
-                    Recovered : {item.recovered}
-                  </Text>
+                >
+                  <View style={{ flex: 1 }}>
+                    <Text style={{ color: "#000" }}>Recovered</Text>
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Text style={{ color: "#1e72fa", fontSize: 25 }}>
+                      {item.recovered}
+                    </Text>
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Text style={{ color: "#1e72fa" }}>
+                      + {item.delta.recovered} ↑
+                    </Text>
+                  </View>
                 </View>
               </View>
-              <Text style={{ padding: 10, paddingTop: 15, color: "#111" }}>
-                New Cases Today :{item.delta.confirmed}
-              </Text>
-              <Text style={{ padding: 10, paddingTop: 15, color: "#111" }}>
-                New Casualties Today :{item.delta.deceased}
-              </Text>
-              <Text style={{ padding: 10, paddingTop: 15, color: "#111" }}>
-                New Recoveries Today :{item.delta.recovered}
-              </Text>
             </View>
           </View>
         );
@@ -233,8 +276,8 @@ export default class CountrySearch extends React.Component {
               lightTheme={true}
               placeholder="Type Here..."
               onChangeText={this.updateSearch}
-              on
               value={searchKey}
+              autoFocus={true}
             />
           </View>
           {this.state.isSearching ? (

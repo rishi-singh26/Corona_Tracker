@@ -24,19 +24,14 @@ var renderDistricts = "";
 export default class Districts extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      search: "",
-    };
+    this.state = {};
   }
-  updateSearch = (search) => {
-    this.setState({ search });
-  };
 
   render() {
     const { search } = this.state;
     const { data } = this.props.route.params;
     const arrayOfDistricts = Object.entries(data.district).map((e) => e[1]);
-    console.log(data);
+    // console.log(data);
     const districts = Object.keys(data.district);
     // console.log(districts);
 
@@ -90,73 +85,114 @@ export default class Districts extends React.Component {
               // position={21}
             />
           </View>
-          <View style={{ flex: 1, flexDirection: "column" }}>
-            <View style={{ flex: 1, flexDirection: "row" }}>
+
+          <View style={{ flex: 1, flexDirection: "row" }}>
+            <View
+              style={{
+                flex: 2,
+                marginTop: 15,
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "#fff",
+                padding: 10,
+                borderRadius: 10,
+                margin: 8,
+              }}
+            >
               <View
                 style={{
                   flex: 1,
-                  backgroundColor: "#ff8585",
-                  maxHeight: 20,
-                  minHeight: 20,
-                  maxWidth: 20,
-                  minWidth: 20,
-                  borderRadius: 20,
-                  marginTop: 15,
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
-              ></View>
-              <View style={{ flex: 5 }}>
-                <Text style={{ padding: 10, paddingTop: 15, color: "#111" }}>
-                  Active: {item.active}
-                </Text>
+              >
+                <View style={{ flex: 1 }}>
+                  <Text style={{ color: "#000" }}>Active</Text>
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={{ color: "#ff8585", fontSize: 25 }}>
+                    {item.active}
+                  </Text>
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={{ color: "#ff8585" }}>
+                    + {item.delta.confirmed} ↑
+                  </Text>
+                </View>
               </View>
             </View>
-            <View style={{ flex: 1, flexDirection: "row" }}>
+            <View
+              style={{
+                flex: 2,
+                marginTop: 15,
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "#fff",
+                borderRadius: 10,
+                padding: 10,
+                margin: 8,
+              }}
+            >
               <View
                 style={{
                   flex: 1,
-                  backgroundColor: "#404040",
-                  maxHeight: 20,
-                  minHeight: 20,
-                  maxWidth: 20,
-                  minWidth: 20,
-                  borderRadius: 20,
-                  marginTop: 15,
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
-              ></View>
-              <View style={{ flex: 5 }}>
-                <Text style={{ padding: 10, paddingTop: 15, color: "#111" }}>
-                  Casualty : {item.deceased}
-                </Text>
+              >
+                <View style={{ flex: 1 }}>
+                  <Text style={{ color: "#000" }}>Casualty</Text>
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={{ color: "#000", fontSize: 25 }}>
+                    {item.deceased}
+                  </Text>
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={{ color: "#404040" }}>
+                    + {item.delta.deceased} ↑
+                  </Text>
+                </View>
               </View>
             </View>
-            <View style={{ flex: 1, flexDirection: "row" }}>
+
+            <View
+              style={{
+                flex: 2,
+                marginTop: 15,
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "#fff",
+                padding: 10,
+                borderRadius: 10,
+                margin: 8,
+              }}
+            >
               <View
                 style={{
                   flex: 1,
-                  backgroundColor: "#1e72fa",
-                  maxHeight: 20,
-                  minHeight: 20,
-                  maxWidth: 20,
-                  minWidth: 20,
-                  borderRadius: 20,
-                  marginTop: 15,
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
-              ></View>
-              <View style={{ flex: 5 }}>
-                <Text style={{ padding: 10, paddingTop: 15, color: "#111" }}>
-                  Recovered : {item.recovered}
-                </Text>
+              >
+                <View style={{ flex: 1 }}>
+                  <Text style={{ color: "#000" }}>Recovered</Text>
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={{ color: "#1e72fa", fontSize: 25 }}>
+                    {item.recovered}
+                  </Text>
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={{ color: "#1e72fa" }}>
+                    + {item.delta.recovered} ↑
+                  </Text>
+                </View>
               </View>
             </View>
-            <Text style={{ padding: 10, paddingTop: 15, color: "#111" }}>
-              New Cases Today :{item.delta.confirmed}
-            </Text>
-            <Text style={{ padding: 10, paddingTop: 15, color: "#111" }}>
-              New Casualties Today :{item.delta.deceased}
-            </Text>
-            <Text style={{ padding: 10, paddingTop: 15, color: "#111" }}>
-              New Recoveries Today :{item.delta.recovered}
-            </Text>
           </View>
         </View>
       );
