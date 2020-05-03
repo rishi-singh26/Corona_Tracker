@@ -19,11 +19,6 @@ import {
 } from "../shared/styles";
 import SegmentedProgressBar from "react-native-segmented-progress-bar";
 import { Button, Icon, SearchBar } from "react-native-elements";
-import {
-  TextField,
-  FilledTextField,
-  OutlinedTextField,
-} from "react-native-material-textfield";
 
 var renderDistrictSearchResult = "";
 
