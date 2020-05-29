@@ -8,18 +8,10 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { SearchBar } from "react-native-elements";
-import {
-  styles,
-  IS_IPHONE_X,
-  STATUS_BAR_HEIGHT,
-  HEADER_HEIGHT,
-  NAV_BAR_HEIGHT,
-  SCREEN_HEIGHT,
-  SCREEN_WIDTH,
-} from "../shared/styles";
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../shared/styles";
 import SegmentedProgressBar from "react-native-segmented-progress-bar";
-import { Button, Icon } from "react-native-elements";
-
+import { Button, Icon, Input } from "react-native-elements";
+import { indianStatesDataLink } from "./apis";
 var renderStates = "";
 
 export default class IndianStates extends React.Component {
@@ -43,18 +35,13 @@ export default class IndianStates extends React.Component {
 
   loadIndiaStatesData = () => {
     this.setState({ isLoading: true }, () => {
-      fetch(
-        "https://corona-virus-world-and-india-data.p.rapidapi.com/api_india",
-        {
-          method: "GET",
-          headers: {
-            "x-rapidapi-host":
-              "corona-virus-world-and-india-data.p.rapidapi.com",
-            "x-rapidapi-key":
-              "2e951fd82emsh85f40a1f5474650p1ab4c3jsn901eda65636e",
-          },
-        }
-      )
+      fetch(indianStatesDataLink.link, {
+        method: "GET",
+        headers: {
+          "x-rapidapi-host": indianStatesDataLink.hostId,
+          "x-rapidapi-key": indianStatesDataLink.keyId,
+        },
+      })
         .then((response) => response.json())
         .then((response) => {
           this.setState({
@@ -304,64 +291,100 @@ export default class IndianStates extends React.Component {
           <View
             style={{
               minWidth: SCREEN_WIDTH,
-              //   paddingTop: STATUS_BA R_HEIGHT,
             }}
           >
             <View
               style={{
                 flex: 1,
-                flexDirection: "row",
-                backgroundColor: "#fff",
+                flexDirection: "column",
                 paddingTop: 30,
-                paddingBottom: 10,
-                paddingLeft: SCREEN_WIDTH / 20,
+                paddingBottom: 5,
+                borderRadius: 25,
+                backgroundColor: "#fff",
+                shadowColor: "#000",
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.2,
+                shadowRadius: 2,
+                elevation: 9,
+                padding: 10,
               }}
             >
-              <View style={{ flex: 7 }}>
-                <Text
-                  style={{
-                    color: "#101010",
-                    fontSize: 35,
-                    fontWeight: "700",
-                    paddingTop: 20,
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: "flex-start",
+                  paddingTop: 10,
+                  paddingLeft: SCREEN_WIDTH / 20,
+                }}
+              >
+                <TouchableOpacity
+                  onPress={() => {
+                    this.props.navigation.toggleDrawer();
                   }}
                 >
-                  Indian States
+                  <Icon
+                    name="menu"
+                    type="feather"
+                    size={30}
+                    reverseColor="#fff"
+                    color="#222"
+                  />
+                </TouchableOpacity>
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text
+                  style={{
+                    color: "#222",
+                    fontSize: 30,
+                    fontWeight: "700",
+                    paddingTop: 10,
+                    paddingLeft: SCREEN_WIDTH / 20,
+                  }}
+                >
+                  Corona
+                </Text>
+                <Text
+                  style={{
+                    color: "#aaa",
+                    fontSize: 25,
+                    fontWeight: "700",
+                    // paddingTop: 10,
+                    paddingLeft: SCREEN_WIDTH / 20,
+                  }}
+                >
+                  Corona Tracker
                 </Text>
               </View>
               <View
                 style={{
                   flex: 1,
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "flex-start",
+                  paddingTop: 20,
+                  margin: 10,
+                  marginBottom: 0,
+                  //   marginLeft: 15,
                 }}
               >
-                <TouchableOpacity
-                  onPress={() => {
-                    this.props.navigation.navigate("StateSearch", {
-                      stateData: arrayOfStates,
-                    });
+                <Input
+                  placeholder="Type here ..."
+                  leftIcon={{
+                    type: "font-awesome",
+                    name: "search",
+                    size: 20,
+                    color: "#aaa",
                   }}
-                >
-                  <Icon
-                    containerStyle={{
-                      paddingTop: 20,
-                    }}
-                    name="search"
-                    type="font-awesome"
-                    color="#010101"
-                    size={25}
-                  />
-                </TouchableOpacity>
+                  inputContainerStyle={{
+                    backgroundColor: "#e1e8ee",
+                    borderRadius: 10,
+                    borderBottomWidth: 0,
+                  }}
+                  inputStyle={{
+                    paddingLeft: 5,
+                    color: "#666",
+                  }}
+                  leftIconContainerStyle={{ paddingLeft: 10 }}
+                />
               </View>
             </View>
-            {/* <SearchBar
-              lightTheme={true}
-              placeholder="Type Here..."
-              onChangeText={this.updateSearch}
-              value={search}
-            /> */}
           </View>
           {this.state.isLoading && (
             <View

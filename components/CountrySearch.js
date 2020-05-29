@@ -4,19 +4,9 @@ import {
   View,
   SafeAreaView,
   ScrollView,
-  RefreshControl,
-  TouchableOpacity,
   ActivityIndicator,
 } from "react-native";
-import {
-  styles,
-  IS_IPHONE_X,
-  STATUS_BAR_HEIGHT,
-  HEADER_HEIGHT,
-  NAV_BAR_HEIGHT,
-  SCREEN_HEIGHT,
-  SCREEN_WIDTH,
-} from "../shared/styles";
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../shared/styles";
 import SegmentedProgressBar from "react-native-segmented-progress-bar";
 import { Button, Icon, SearchBar } from "react-native-elements";
 

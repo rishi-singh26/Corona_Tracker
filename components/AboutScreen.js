@@ -168,15 +168,34 @@ class About extends React.Component {
           >
             <View
               style={{
-                justifyContent: "center",
-                alignSelf: "center",
+                flex: 1,
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignSelf: "flex-start",
                 maxHeight: 100,
+                paddingTop: 20,
+                paddingLeft: 10,
+                marginBottom: 30,
               }}
             >
-              <Image
-                source={require("../assets/icon.png")}
-                style={{ width: 100, height: 100 }}
-              />
+              <View style={{ flex: 2, paddingTop: 10 }}>
+                <Image
+                  source={require("../assets/icon.png")}
+                  style={{ width: 100, height: 100 }}
+                />
+              </View>
+              <View style={{ flex: 3 }}>
+                <Text
+                  style={{
+                    color: "#101010",
+                    fontSize: 30,
+                    fontWeight: "700",
+                    paddingTop: 20,
+                  }}
+                >
+                  Corona Tracker
+                </Text>
+              </View>
             </View>
             <View
               style={{

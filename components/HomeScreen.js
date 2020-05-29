@@ -10,18 +10,10 @@ import {
   Linking,
 } from "react-native";
 import fetch from "cross-fetch";
-import {
-  styles,
-  IS_IPHONE_X,
-  STATUS_BAR_HEIGHT,
-  HEADER_HEIGHT,
-  NAV_BAR_HEIGHT,
-  SCREEN_HEIGHT,
-  SCREEN_WIDTH,
-} from "../shared/styles";
+import { SCREEN_WIDTH } from "../shared/styles";
 import SegmentedProgressBar from "react-native-segmented-progress-bar";
-import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 import { Button, Icon } from "react-native-elements";
+import { countryDataLink, globalDataLink, indianStatesDataLink } from "./apis";
 
 class Home extends React.Component {
   constructor(props) {
@@ -56,7 +48,7 @@ class Home extends React.Component {
 
   loadCountryData = () => {
     this.setState({ isGlobalDataLoading: true }, () => {
-      fetch("https://corona-api.com/countries")
+      fetch(countryDataLink)
         .then((response) => response.json())
         .then((response) => {
           this.setState({
@@ -73,7 +65,7 @@ class Home extends React.Component {
 
   loadGlobalData = () => {
     this.setState({ isLoading: true }, () => {
-      fetch("https://corona-api.com/timeline")
+      fetch(globalDataLink)
         .then((response) => response.json())
         .then((response) => {
           this.setState({
@@ -90,18 +82,13 @@ class Home extends React.Component {
 
   loadIndiaStatesData = () => {
     this.setState({ isLoading: true }, () => {
-      fetch(
-        "https://corona-virus-world-and-india-data.p.rapidapi.com/api_india",
-        {
-          method: "GET",
-          headers: {
-            "x-rapidapi-host":
-              "corona-virus-world-and-india-data.p.rapidapi.com",
-            "x-rapidapi-key":
-              "2e951fd82emsh85f40a1f5474650p1ab4c3jsn901eda65636e",
-          },
-        }
-      )
+      fetch(indianStatesDataLink.link, {
+        method: "GET",
+        headers: {
+          "x-rapidapi-host": indianStatesDataLink.hostId,
+          "x-rapidapi-key": indianStatesDataLink.keyId,
+        },
+      })
         .then((response) => response.json())
         .then((response) => {
           this.setState({
@@ -129,7 +116,7 @@ class Home extends React.Component {
         <Text
           style={{
             // color: "#fdfdfd",
-            fontSize: 25,
+            fontSize: 22,
             fontWeight: "700",
             paddingLeft: 10,
             color: "#111",
@@ -303,7 +290,7 @@ class Home extends React.Component {
         <Text
           style={{
             // color: "#fdfdfd",
-            fontSize: 25,
+            fontSize: 22,
             fontWeight: "700",
             paddingLeft: 10,
             color: "#111",

@@ -7,18 +7,9 @@ import {
   RefreshControl,
   TouchableOpacity,
 } from "react-native";
-import { SearchBar } from "react-native-elements";
-import {
-  styles,
-  IS_IPHONE_X,
-  STATUS_BAR_HEIGHT,
-  HEADER_HEIGHT,
-  NAV_BAR_HEIGHT,
-  SCREEN_HEIGHT,
-  SCREEN_WIDTH,
-} from "../shared/styles";
-import SegmentedProgressBar from "react-native-segmented-progress-bar";
-import { Button, Icon } from "react-native-elements";
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../shared/styles";
+import { Icon } from "react-native-elements";
+import { countryDataLink } from "./apis";
 
 var renderCountries = "";
 
@@ -43,7 +34,7 @@ export default class Countries extends React.Component {
 
   loadCountryData = async () => {
     this.setState({ isLoading: true }, () => {
-      fetch("https://corona-api.com/countries")
+      fetch(countryDataLink)
         .then((response) => response.json())
         .then((response) => {
           this.setState({
