@@ -14,6 +14,8 @@ import { SCREEN_WIDTH } from "../shared/styles";
 import SegmentedProgressBar from "react-native-segmented-progress-bar";
 import { Button, Icon } from "react-native-elements";
 import { countryDataLink, globalDataLink, indianStatesDataLink } from "./apis";
+import LoadingShimmer from "../shared/LoadingShimmer";
+import Header from "../shared/Header";
 
 class Home extends React.Component {
   constructor(props) {
@@ -35,9 +37,7 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
-    this.loadGlobalData();
-    this.loadIndiaStatesData();
-    this.loadCountryData();
+    this.loadData();
   }
 
   loadData = () => {
@@ -491,10 +491,6 @@ class Home extends React.Component {
               colors={["#fff"]}
             />
           }
-          onScrollBeginDrag={() => {
-            // console.log(this.state.globalData);
-            // console.log(this.state.indiaStateWise);
-          }}
           stickyHeaderIndices={[0]}
         >
           <View
@@ -537,28 +533,22 @@ class Home extends React.Component {
               style={{
                 flex: 1,
                 justifyContent: "flex-end",
-                // marginLeft: SCREEN_WIDTH / 40,
-                // marginTop: 0,
               }}
             >
               <Image
                 style={{
-                  // marginLeft: SCREEN_WIDTH / 40,
-
-                  //   marginRight: SCREEN_WIDTH / 40,
                   width: SCREEN_WIDTH / 4,
                   height: SCREEN_WIDTH / 4,
                   borderTopLeftRadius: 20,
                   borderTopRightRadius: 20,
                   borderBottomLeftRadius: 20,
                   borderBottomRightRadius: 20,
-                  // overflow: "hidden",
                 }}
                 source={require("../assets/fightcorona.png")}
               />
             </View>
             <View style={{ flex: 3 }}>
-              <Text style={{ fontSize: 28, fontWeight: "600", color: "#444" }}>
+              <Text style={{ fontSize: 22, fontWeight: "600", color: "#444" }}>
                 Lets Fight Corona
               </Text>
               <Text
@@ -576,8 +566,7 @@ class Home extends React.Component {
           <View
             style={{
               flexDirection: "row",
-              margin: 20,
-              marginBottom: 0,
+              marginHorizontal: 20,
               backgroundColor: "#e1e8ee",
               flex: 1,
               justifyContent: "center",
@@ -611,11 +600,15 @@ class Home extends React.Component {
               </TouchableOpacity>
             </View>
           </View>
-          <View style={{ padding: SCREEN_WIDTH / 40 }}>
-            <this.renderIndiaDataCard />
-            <View style={{ minHeight: 10, maxHeight: 10 }}></View>
-            <this.renderGlobalDataCard />
-          </View>
+          {this.state.isLoading || this.state.isGlobalDataLoading ? (
+            <LoadingShimmer />
+          ) : (
+            <View style={{ padding: SCREEN_WIDTH / 40 }}>
+              <this.renderIndiaDataCard />
+              <View style={{ minHeight: 10, maxHeight: 10 }}></View>
+              <this.renderGlobalDataCard />
+            </View>
+          )}
           <View
             style={{
               padding: 20,

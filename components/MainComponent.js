@@ -16,6 +16,7 @@ import About from "./AboutScreen";
 const Stack = createStackNavigator();
 
 function MyStack() {
+  console.disableYellowBox = true;
   return (
     <Stack.Navigator
       screenOptions={{
