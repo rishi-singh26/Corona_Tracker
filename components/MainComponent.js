@@ -1,8 +1,8 @@
 import * as React from "react";
-import { View, StyleSheet } from "react-native";
+import { StatusBar, StyleSheet } from "react-native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import { createStackNavigator, CardStyleInterpolators } from "@react-navigation/stack";
 
 import Home from "./HomeScreen";
 import Countries from "./CountriesDataScreen";
@@ -16,11 +16,11 @@ import About from "./AboutScreen";
 const Stack = createStackNavigator();
 
 function MyStack() {
-  console.disableYellowBox = true;
   return (
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
+        cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid
       }}
     >
       <Stack.Screen name="Home" component={Home} />
@@ -38,17 +38,25 @@ const Drawer = createDrawerNavigator();
 
 export default function Main() {
   return (
+    <>
+    <StatusBar barStyle="dark-content" backgroundColor="#fff" />
     <NavigationContainer>
-      <Drawer.Navigator
-        initialRouteName="Home"
-        drawerStyle={{
-          backgroundColor: "#fff",
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+          cardStyleInterpolator: CardStyleInterpolators.forRevealFromBottomAndroid
         }}
       >
-        <Drawer.Screen name="Home" component={MyStack} />
-        <Drawer.Screen name="About" component={About} />
-      </Drawer.Navigator>
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="CountriesScreen" component={Countries} />
+        <Stack.Screen name="IndianStates" component={IndianStates} />
+        <Stack.Screen name="IndianDistricts" component={Districts} />
+        <Stack.Screen name="StateSearch" component={StateSearch} />
+        <Stack.Screen name="DistrictSearch" component={DistrictSearch} />
+        <Stack.Screen name="CountrySearch" component={CountrySearch} />
+      </Stack.Navigator>
     </NavigationContainer>
+    </>
   );
 }
 

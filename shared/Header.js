@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
-import { Button, Icon, Input } from "react-native-elements";
+import { View, Text } from "react-native";
+import { Input } from "react-native-elements";
 import { SCREEN_WIDTH, SCREEN_HEIGHT } from "./styles";
 import CustomMenu from "./CustomMenuBtn";
 
 function search(searchKey, allData, func, screenName, isDataLoading) {
   var newSearchResults = [];
 
-  console.log("Here is all data", typeof allData);
+  // console.log("Here is all data", typeof allData);
 
   var arrayOfStates = allData;
   screenName === "states" && !isDataLoading
@@ -33,16 +33,13 @@ export default function Header(props) {
       style={{
         minWidth: SCREEN_WIDTH,
         minHeight: props.showSearchbar
-          ? SCREEN_HEIGHT / 3.7
-          : SCREEN_HEIGHT / 6.5,
-        paddingTop: 30,
+          ? SCREEN_HEIGHT / 5.6
+          : SCREEN_HEIGHT / 12,
         paddingBottom: 5,
-        borderBottomRightRadius: props.showSearchbar ? 25 : 0,
-        borderBottomLeftRadius: props.showSearchbar ? 25 : 0,
         borderWidth: 0.5,
         borderColor: props.showSearchbar ? "#efefef" : "#fff",
         backgroundColor: "#fff",
-        padding: 10,
+        padding: 8,
       }}
     >
       <View style={{ flex: 1 }}>
@@ -56,17 +53,6 @@ export default function Header(props) {
           }}
         >
           {props.title}
-        </Text>
-        <Text
-          style={{
-            color: "#aaa",
-            fontSize: 25,
-            fontWeight: "700",
-            paddingHorizontal: SCREEN_WIDTH / 25,
-            paddingTop: 5,
-          }}
-        >
-          Corona Tracker
         </Text>
       </View>
       {props.showSearchbar ? (

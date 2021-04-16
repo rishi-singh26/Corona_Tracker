@@ -15,7 +15,7 @@ import SegmentedProgressBar from "react-native-segmented-progress-bar";
 import { Button, Icon } from "react-native-elements";
 import { countryDataLink, globalDataLink, indianStatesDataLink } from "./apis";
 import LoadingShimmer from "../shared/LoadingShimmer";
-import Header from "../shared/Header";
+import CustomMenu from "../shared/CustomMenuBtn";
 
 class Home extends React.Component {
   constructor(props) {
@@ -434,7 +434,8 @@ class Home extends React.Component {
         </View>
 
         <Text style={{ padding: 10, paddingTop: 15, color: "#111" }}>
-          Last Update Date and Time :{this.state.globalData.updated_at}
+          Last Update Date and Time :{" "}
+          {new Date(this.state.globalData.updated_at).toDateString()}
         </Text>
         <View style={{ padding: 10, flex: 1, flexDirection: "row-reverse" }}>
           <View style={{ flex: 1 }}>
@@ -478,7 +479,26 @@ class Home extends React.Component {
   render() {
     // console.log(this.state.globalData);
     return (
-      <SafeAreaView>
+      <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            paddingHorizontal: 20,
+            paddingVertical: 15,
+          }}
+        >
+          <Text style={{ fontSize: 30, fontWeight: "700", color: "#444" }}>
+            Corona Tracker
+          </Text>
+          <CustomMenu
+            onPress={() =>
+              // this.props.navigation.toggleDrawer()
+              alert("Pressed")
+            }
+          />
+        </View>
         <ScrollView
           style={{ backgroundColor: "#fff" }}
           showsVerticalScrollIndicator={false}
@@ -491,42 +511,13 @@ class Home extends React.Component {
               colors={["#fff"]}
             />
           }
-          stickyHeaderIndices={[0]}
         >
-          <View
-            style={{
-              minWidth: SCREEN_WIDTH,
-            }}
-          >
-            <View
-              style={{
-                flex: 1,
-                flexDirection: "row",
-                backgroundColor: "#fff",
-                paddingTop: 30,
-                paddingBottom: 10,
-                paddingLeft: SCREEN_WIDTH / 20,
-              }}
-            >
-              <Text
-                style={{
-                  color: "#444",
-                  fontSize: 35,
-                  fontWeight: "700",
-                  paddingTop: 20,
-                }}
-              >
-                Corona Tracker
-              </Text>
-            </View>
-          </View>
           <View
             style={{
               flex: 1,
               flexDirection: "row-reverse",
               padding: 20,
-              margin: SCREEN_WIDTH / 40,
-              borderRadius: 20,
+              margin: 15,
             }}
           >
             <View
@@ -537,8 +528,8 @@ class Home extends React.Component {
             >
               <Image
                 style={{
-                  width: SCREEN_WIDTH / 4,
-                  height: SCREEN_WIDTH / 4,
+                  width: SCREEN_WIDTH / 6,
+                  height: SCREEN_WIDTH / 6,
                   borderTopLeftRadius: 20,
                   borderTopRightRadius: 20,
                   borderBottomLeftRadius: 20,
@@ -548,12 +539,12 @@ class Home extends React.Component {
               />
             </View>
             <View style={{ flex: 3 }}>
-              <Text style={{ fontSize: 22, fontWeight: "600", color: "#444" }}>
+              <Text style={{ fontSize: 18, fontWeight: "600", color: "#444" }}>
                 Lets Fight Corona
               </Text>
               <Text
                 style={{
-                  fontSize: 17,
+                  fontSize: 15,
                   fontWeight: "300",
                   marginTop: 20,
                   color: "#555",
@@ -566,42 +557,41 @@ class Home extends React.Component {
           <View
             style={{
               flexDirection: "row",
-              marginHorizontal: 20,
               backgroundColor: "#e1e8ee",
               flex: 1,
-              justifyContent: "center",
+              justifyContent: "space-between",
               alignItems: "center",
+              marginHorizontal: 10,
               borderRadius: 20,
             }}
           >
-            <View style={{ flex: 3, marginLeft: SCREEN_WIDTH / 10 }}>
+            <View style={{ marginLeft: 20 }}>
               <Text style={{ fontSize: 20 }}>Call Helpline : 1075</Text>
             </View>
-            <View style={{ flex: 1 }}>
-              <TouchableOpacity
-                onPress={() => {
-                  var phoneNumber = "";
-                  if (Platform.OS === "android") {
-                    phoneNumber = "tel:" + 1075;
-                  } else {
-                    phoneNumber = "telprompt:" + 1075;
-                  }
+            <TouchableOpacity
+              onPress={() => {
+                var phoneNumber = "";
+                if (Platform.OS === "android") {
+                  phoneNumber = "tel:" + 1075;
+                } else {
+                  phoneNumber = "telprompt:" + 1075;
+                }
 
-                  Linking.openURL(phoneNumber);
-                }}
-              >
-                <Icon
-                  name="phone"
-                  type="font-awesome"
-                  reverse
-                  reverseColor="#fff"
-                  color="#1e72fa"
-                />
-              </TouchableOpacity>
-            </View>
+                Linking.openURL(phoneNumber);
+              }}
+              style={{ marginHorizontal: 10 }}
+            >
+              <Icon
+                name="phone"
+                type="font-awesome"
+                reverse
+                reverseColor="#fff"
+                color="#1e72fa"
+              />
+            </TouchableOpacity>
           </View>
           {this.state.isLoading || this.state.isGlobalDataLoading ? (
-            <LoadingShimmer />
+            <LoadingShimmer arr={[1, 2]} />
           ) : (
             <View style={{ padding: SCREEN_WIDTH / 40 }}>
               <this.renderIndiaDataCard />

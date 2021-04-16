@@ -1,21 +1,22 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 
 export default function CustomMenu(props) {
   return (
-    <View style={{ flex: 1, flexDirection: "column" }}>
-      <View style={[styles.bar, { width: 20 }]}></View>
-      <View style={[styles.bar, { width: 25 }]}></View>
-      <View style={[styles.bar, { width: 23 }]}></View>
-    </View>
+    <TouchableOpacity style={{ padding: 10, backgroundColor: "#efefef", borderRadius: 7 }} onPress={props.onPress}>
+      <View style={styles.bar}></View>
+      <View style={styles.bar}></View>
+      <View style={styles.bar}></View>
+    </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   bar: {
-    backgroundColor: "#000",
-    borderRadius: 10,
-    height: 4.3,
-    marginVertical: 1,
+    backgroundColor: "#444",
+    borderRadius: 2,
+    height: 3.2,
+    marginVertical: 1.3,
+    width: 5
   },
 });

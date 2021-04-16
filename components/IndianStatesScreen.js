@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Text,
   View,
   SafeAreaView,
   ScrollView,
@@ -8,10 +7,6 @@ import {
   FlatList,
   StyleSheet,
 } from "react-native";
-import { SearchBar } from "react-native-elements";
-import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../shared/styles";
-import SegmentedProgressBar from "react-native-segmented-progress-bar";
-import { Button, Icon, Input } from "react-native-elements";
 import { indianStatesDataLink } from "./apis";
 import Header from "../shared/Header";
 import LoadingShimmer from "../shared/LoadingShimmer";
@@ -92,13 +87,14 @@ export default class IndianStates extends React.Component {
             }}
             screenName="states"
             title="States"
-            showSearchbar
+            showSearchbar={true}
           />
           {this.state.isLoading ? (
-            <LoadingShimmer />
+            <ScrollView>
+              <LoadingShimmer arr={[1, 2, 3]} />
+            </ScrollView>
           ) : (
             <FlatList
-              // style={{ flex: 1 }}
               showsVerticalScrollIndicator={false}
               refreshControl={
                 <RefreshControl
@@ -111,14 +107,20 @@ export default class IndianStates extends React.Component {
                 />
               }
               data={arrayOfStates}
-              renderItem={({ item, index }) =>
-                RenderStates(item, index, (screen, data) => {
-                  this.props.navigation.navigate(screen, {
-                    data: data,
-                  });
-                })
-              }
-              keyExtractor={({ item, index }) => item}
+              renderItem={({ item, index }) => {
+                return (
+                  <RenderStates
+                    item={item}
+                    index={index}
+                    func={(screen, data) => {
+                      this.props.navigation.navigate(screen, {
+                        data: data,
+                      });
+                    }}
+                  />
+                );
+              }}
+              keyExtractor={(item, index) => index.toString()}
             />
           )}
         </View>

@@ -4,7 +4,7 @@ import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../shared/styles";
 import SegmentedProgressBar from "react-native-segmented-progress-bar";
 import { Button, Icon, Input } from "react-native-elements";
 
-export default function RenderStates(item, index, func) {
+export default function RenderStates({item, index, func}) {
   return (
     <View
       key={index}
@@ -75,7 +75,7 @@ export default function RenderStates(item, index, func) {
               <Text style={{ color: "#000" }}>Active</Text>
             </View>
             <View style={{ flex: 1 }}>
-              <Text style={{ color: "#ff8585", fontSize: 25 }}>
+              <Text style={{ color: "#ff8585", fontSize: 18 }}>
                 {item.active}
               </Text>
             </View>
@@ -110,7 +110,7 @@ export default function RenderStates(item, index, func) {
               <Text style={{ color: "#000" }}>Casualty</Text>
             </View>
             <View style={{ flex: 1 }}>
-              <Text style={{ color: "#000", fontSize: 25 }}>{item.deaths}</Text>
+              <Text style={{ color: "#000", fontSize: 18 }}>{item.deaths}</Text>
             </View>
             <View style={{ flex: 1 }}>
               <Text style={{ color: "#404040" }}>+ {item.deltadeaths} ↑</Text>
@@ -142,7 +142,7 @@ export default function RenderStates(item, index, func) {
               <Text style={{ color: "#000" }}>Recovered</Text>
             </View>
             <View style={{ flex: 1 }}>
-              <Text style={{ color: "#1e72fa", fontSize: 25 }}>
+              <Text style={{ color: "#1e72fa", fontSize: 18 }}>
                 {item.recovered}
               </Text>
             </View>
