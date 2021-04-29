@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Image,
   Linking,
+  Alert,
 } from "react-native";
 import fetch from "cross-fetch";
 import { SCREEN_WIDTH } from "../shared/styles";
@@ -494,8 +495,10 @@ class Home extends React.Component {
           </Text>
           <CustomMenu
             onPress={() =>
-              // this.props.navigation.toggleDrawer()
-              alert("Pressed")
+              Alert.alert("This does nothing.","Just there", [
+                { text: "OK", onPress: () => {} }
+              ],
+              { cancelable: true })
             }
           />
         </View>
