@@ -5,12 +5,12 @@ import {
   ScrollView,
   RefreshControl,
   FlatList,
-  StyleSheet,
 } from "react-native";
 import { indianStatesDataLink } from "./apis";
 import Header from "../shared/Header";
 import LoadingShimmer from "../shared/LoadingShimmer";
-import RenderStates from "./RenderStates";
+import { Button } from "react-native-elements";
+import RenderCard from "../shared/RenderCard";
 
 export default class IndianStates extends React.Component {
   constructor(props) {
@@ -61,7 +61,7 @@ export default class IndianStates extends React.Component {
       (e) => e[1]
     );
 
-    //below is function to sort the rray of state in alphabetical order
+    //below is function to sort the array of state in alphabetical order
     function compare(a, b) {
       if (a.state < b.state) {
         return -1;
@@ -77,25 +77,26 @@ export default class IndianStates extends React.Component {
 
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
-        <View style={{ backgroundColor: "#fff" }}>
-          <Header
-            isDataLoading={this.state.isLoading}
-            data={this.state.indiaStateWise}
-            searchFunc={(data) => this.setState({ searchableData: data })}
-            onMenuPress={() => {
-              this.props.navigation.toggleDrawer();
-            }}
-            screenName="states"
-            title="States"
-            showSearchbar={true}
-          />
+        <Header
+          isDataLoading={this.state.isLoading}
+          data={this.state.indiaStateWise}
+          searchFunc={(data) => this.setState({ searchableData: data })}
+          onMenuPress={() => {
+            this.props.navigation.toggleDrawer();
+          }}
+          screenName="states"
+          title="States"
+          showSearchbar={true}
+          // onLeftArrowPress={() => this.props.navigation.goBack()}
+        />
+        <View>
           {this.state.isLoading ? (
             <ScrollView>
               <LoadingShimmer arr={[1, 2, 3]} />
             </ScrollView>
           ) : (
             <FlatList
-              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{ flex: 1 }}
               refreshControl={
                 <RefreshControl
                   refreshing={this.state.isLoading}
@@ -109,15 +110,51 @@ export default class IndianStates extends React.Component {
               data={arrayOfStates}
               renderItem={({ item, index }) => {
                 return (
-                  <RenderStates
-                    item={item}
-                    index={index}
-                    func={(screen, data) => {
-                      this.props.navigation.navigate(screen, {
-                        data: data,
-                      });
-                    }}
-                  />
+                  <RenderCard
+                    cardName={item.state}
+                    totalConfirmed={item.confirmed}
+                    totalActive={item.active}
+                    totalRecovered={item.recovered}
+                    deltaConfirmed={item.deltaconfirmed}
+                    totalDeaths={item.deaths}
+                    deltaDeaths={item.deltadeaths}
+                    deltaRecovered={item.deltarecovered}
+                  >
+                    {Number(item.active) +
+                      Number(item.deaths) +
+                      Number(item.recovered) ===
+                      0 && (
+                      <View style={{ padding: 10 }}>
+                        <Button
+                          title="No District Data"
+                          disabled
+                          disabledStyle={{
+                            backgroundColor: "#fff",
+                            borderRadius: 20,
+                          }}
+                        ></Button>
+                      </View>
+                    )}
+                    {Number(item.active) +
+                      Number(item.deaths) +
+                      Number(item.recovered) !==
+                      0 && (
+                      <View style={{ padding: 10 }}>
+                        <Button
+                          title="District Data"
+                          buttonStyle={{
+                            backgroundColor: "#1e72fa",
+                            borderRadius: 20,
+                          }}
+                          onPress={() => {
+                            this.props.navigation.navigate("IndianDistricts", {
+                              data: item,
+                            });
+                          }}
+                        ></Button>
+                      </View>
+                    )}
+                  </RenderCard>
                 );
               }}
               keyExtractor={(item, index) => index.toString()}
@@ -128,7 +165,3 @@ export default class IndianStates extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  shimmerStye: { padding: 20, borderRadius: 5, margin: 10 },
-});

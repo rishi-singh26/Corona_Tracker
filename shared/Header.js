@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { Input } from "react-native-elements";
 import { SCREEN_WIDTH, SCREEN_HEIGHT } from "./styles";
-import CustomMenu from "./CustomMenuBtn";
+import { Feather } from "@expo/vector-icons";
 
 function search(searchKey, allData, func, screenName, isDataLoading) {
   var newSearchResults = [];
@@ -33,7 +33,7 @@ export default function Header(props) {
       style={{
         minWidth: SCREEN_WIDTH,
         minHeight: props.showSearchbar
-          ? SCREEN_HEIGHT / 5.6
+          ? SCREEN_HEIGHT / 5
           : SCREEN_HEIGHT / 12,
         paddingBottom: 5,
         borderWidth: 0.5,
@@ -42,13 +42,27 @@ export default function Header(props) {
         padding: 8,
       }}
     >
-      <View style={{ flex: 1 }}>
+      <View
+        style={{
+          flex: 1,
+          flexDirection: "row",
+          justifyContent: "flex-start",
+          alignItems: "center",
+        }}
+      >
+        {props.onLeftArrowPress ? (
+          <TouchableOpacity
+            onPress={props.onLeftArrowPress}
+            style={{ padding: 10 }}
+          >
+            <Feather name="arrow-left" size={23} color={"#111"} />
+          </TouchableOpacity>
+        ) : null}
         <Text
           style={{
             color: "#222",
             fontSize: 30,
             fontWeight: "700",
-            paddingTop: 10,
             paddingLeft: SCREEN_WIDTH / 25,
           }}
         >

@@ -12,11 +12,11 @@ import {
 } from "react-native";
 import fetch from "cross-fetch";
 import { SCREEN_WIDTH } from "../shared/styles";
-import SegmentedProgressBar from "react-native-segmented-progress-bar";
-import { Button, Icon } from "react-native-elements";
+import { Icon } from "react-native-elements";
 import { countryDataLink, globalDataLink, indianStatesDataLink } from "./apis";
 import LoadingShimmer from "../shared/LoadingShimmer";
 import CustomMenu from "../shared/CustomMenuBtn";
+import RenderCard from "../shared/RenderCard";
 
 class Home extends React.Component {
   constructor(props) {
@@ -104,379 +104,6 @@ class Home extends React.Component {
     });
   };
 
-  renderIndiaDataCard = () => {
-    return (
-      <View
-        style={{
-          backgroundColor: "#e1e8ee",
-          minWidth: (SCREEN_WIDTH / 40) * 38,
-          borderRadius: 20,
-          padding: 10,
-        }}
-      >
-        <Text
-          style={{
-            // color: "#fdfdfd",
-            fontSize: 22,
-            fontWeight: "700",
-            paddingLeft: 10,
-            color: "#111",
-          }}
-        >
-          India : {this.state.indiaTotalData.confirmed} Cases
-        </Text>
-        <View
-          style={{
-            marginTop: 20,
-            backgroundColor: "#eee",
-            borderRadius: 20,
-            paddingLeft: 10,
-            paddingRight: 10,
-          }}
-        >
-          <SegmentedProgressBar
-            // showSeparatorValue
-            values={[
-              0,
-              this.state.indiaTotalData.active,
-              this.state.indiaTotalData.confirmed -
-                this.state.indiaTotalData.recovered,
-              this.state.indiaTotalData.confirmed,
-            ]}
-            colors={["#ff8585", "#404040", "#1e72fa"]}
-            height={15}
-            // labels={["underweight", "normal", "overweight", "obese"]}
-            // position={21}
-          />
-        </View>
-        <View style={{ flex: 1, flexDirection: "column" }}>
-          {/* here */}
-
-          <View style={{ flex: 1, flexDirection: "row" }}>
-            <View
-              style={{
-                flex: 2,
-                marginTop: 15,
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: "#fff",
-                padding: 10,
-                borderRadius: 10,
-                margin: 8,
-              }}
-            >
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <View style={{ flex: 1 }}>
-                  <Text style={{ color: "#000" }}>Active</Text>
-                </View>
-                <View style={{ flex: 1 }}>
-                  <Text style={{ color: "#ff8585", fontSize: 18 }}>
-                    {this.state.indiaTotalData.active}
-                  </Text>
-                </View>
-                <View style={{ flex: 1 }}>
-                  <Text style={{ color: "#ff8585" }}>
-                    + {this.state.indiaTotalData.deltaconfirmed} ↑
-                  </Text>
-                </View>
-              </View>
-            </View>
-            <View
-              style={{
-                flex: 2,
-                marginTop: 15,
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: "#fff",
-                borderRadius: 10,
-                padding: 10,
-                margin: 8,
-              }}
-            >
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <View style={{ flex: 1 }}>
-                  <Text style={{ color: "#000" }}>Casualty</Text>
-                </View>
-                <View style={{ flex: 1 }}>
-                  <Text style={{ color: "#000", fontSize: 18 }}>
-                    {this.state.indiaTotalData.deaths}
-                  </Text>
-                </View>
-                <View style={{ flex: 1 }}>
-                  <Text style={{ color: "#404040" }}>
-                    + {this.state.indiaTotalData.deltadeaths} ↑
-                  </Text>
-                </View>
-              </View>
-            </View>
-
-            <View
-              style={{
-                flex: 2,
-                marginTop: 15,
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: "#fff",
-                padding: 10,
-                borderRadius: 10,
-                margin: 8,
-              }}
-            >
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <View style={{ flex: 1 }}>
-                  <Text style={{ color: "#000" }}>Recovered</Text>
-                </View>
-                <View style={{ flex: 1 }}>
-                  <Text style={{ color: "#1e72fa", fontSize: 18 }}>
-                    {this.state.indiaTotalData.recovered}
-                  </Text>
-                </View>
-                <View style={{ flex: 1 }}>
-                  <Text style={{ color: "#1e72fa" }}>
-                    + {this.state.indiaTotalData.deltarecovered} ↑
-                  </Text>
-                </View>
-              </View>
-            </View>
-          </View>
-
-          {/* //hehe */}
-          <Text style={{ padding: 10, paddingTop: 15, color: "#111" }}>
-            Last Update Date and Time :
-            {this.state.indiaTotalData.lastupdatedtime}
-          </Text>
-        </View>
-        <View style={{ padding: 10 }}>
-          <Button
-            title="States Data"
-            buttonStyle={{ backgroundColor: "#1e72fa", borderRadius: 20 }}
-            onPress={() => this.props.navigation.navigate("IndianStates")}
-          ></Button>
-        </View>
-      </View>
-    );
-  };
-
-  renderGlobalDataCard = () => {
-    return (
-      <View
-        style={{
-          backgroundColor: "#e1e8ee",
-          minWidth: (SCREEN_WIDTH / 40) * 38,
-          borderRadius: 20,
-          padding: 10,
-        }}
-      >
-        <Text
-          style={{
-            // color: "#fdfdfd",
-            fontSize: 22,
-            fontWeight: "700",
-            paddingLeft: 10,
-            color: "#111",
-          }}
-        >
-          Global : {this.state.globalData.confirmed} Cases
-        </Text>
-        <View
-          style={{
-            marginTop: 20,
-            backgroundColor: "#eee",
-            borderRadius: 20,
-            paddingLeft: 10,
-            paddingRight: 10,
-          }}
-        >
-          <SegmentedProgressBar
-            // showSeparatorValue
-            values={[
-              0,
-              this.state.globalData.active,
-              this.state.globalData.active + this.state.globalData.deaths,
-              this.state.globalData.active +
-                this.state.globalData.deaths +
-                this.state.globalData.recovered,
-            ]}
-            colors={["#ff8585", "#404040", "#1e72fa"]}
-            height={15}
-            // labels={["underweight", "normal", "overweight", "obese"]}
-            // position={21}
-          />
-        </View>
-
-        <View style={{ flex: 1, flexDirection: "row" }}>
-          <View
-            style={{
-              flex: 2,
-              marginTop: 15,
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: "#fff",
-              padding: 10,
-              borderRadius: 10,
-              margin: 8,
-            }}
-          >
-            <View
-              style={{
-                flex: 1,
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <View style={{ flex: 1 }}>
-                <Text style={{ color: "#000" }}>Active</Text>
-              </View>
-              <View style={{ flex: 1 }}>
-                <Text style={{ color: "#ff8585", fontSize: 18 }}>
-                  {this.state.globalData.active}
-                </Text>
-              </View>
-              <View style={{ flex: 1 }}>
-                <Text style={{ color: "#ff8585" }}>
-                  + {this.state.globalData.new_confirmed} ↑
-                </Text>
-              </View>
-            </View>
-          </View>
-          <View
-            style={{
-              flex: 2,
-              marginTop: 15,
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: "#fff",
-              borderRadius: 10,
-              padding: 10,
-              margin: 8,
-            }}
-          >
-            <View
-              style={{
-                flex: 1,
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <View style={{ flex: 1 }}>
-                <Text style={{ color: "#000" }}>Casualty</Text>
-              </View>
-              <View style={{ flex: 1 }}>
-                <Text style={{ color: "#000", fontSize: 18 }}>
-                  {this.state.globalData.deaths}
-                </Text>
-              </View>
-              <View style={{ flex: 1 }}>
-                <Text style={{ color: "#404040" }}>
-                  + {this.state.globalData.new_deaths} ↑
-                </Text>
-              </View>
-            </View>
-          </View>
-
-          <View
-            style={{
-              flex: 2,
-              marginTop: 15,
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: "#fff",
-              padding: 10,
-              borderRadius: 10,
-              margin: 8,
-            }}
-          >
-            <View
-              style={{
-                flex: 1,
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <View style={{ flex: 1 }}>
-                <Text style={{ color: "#000" }}>Recovered</Text>
-              </View>
-              <View style={{ flex: 1 }}>
-                <Text style={{ color: "#1e72fa", fontSize: 18 }}>
-                  {this.state.globalData.recovered}
-                </Text>
-              </View>
-              <View style={{ flex: 1 }}>
-                <Text style={{ color: "#1e72fa" }}>
-                  + {this.state.globalData.new_recovered} ↑
-                </Text>
-              </View>
-            </View>
-          </View>
-        </View>
-
-        <Text style={{ padding: 10, paddingTop: 15, color: "#111" }}>
-          Last Update Date and Time :{" "}
-          {new Date(this.state.globalData.updated_at).toDateString()}
-        </Text>
-        <View style={{ padding: 10, flex: 1, flexDirection: "row-reverse" }}>
-          <View style={{ flex: 1 }}>
-            <Button
-              title="Global Data List"
-              buttonStyle={{
-                backgroundColor: "#1e72fa",
-                borderRadius: 20,
-                margin: 10,
-              }}
-              onPress={() => {
-                this.props.navigation.navigate("CountriesScreen");
-              }}
-            ></Button>
-          </View>
-          <View style={{ flex: 1 }}>
-            <Button
-              title="Search Countries"
-              buttonStyle={{
-                backgroundColor: "#1e72fa",
-                borderRadius: 20,
-                margin: 10,
-              }}
-              onPress={() => {
-                if (!this.state.isGlobalDataLoading) {
-                  const arrayOfCountries = Object.entries(
-                    this.state.countries
-                  ).map((e) => e[1]);
-                  this.props.navigation.navigate("CountrySearch", {
-                    countryData: arrayOfCountries,
-                  });
-                }
-              }}
-            ></Button>
-          </View>
-        </View>
-      </View>
-    );
-  };
-
   render() {
     // console.log(this.state.globalData);
     return (
@@ -495,15 +122,16 @@ class Home extends React.Component {
           </Text>
           <CustomMenu
             onPress={() =>
-              Alert.alert("This does nothing.","Just there", [
-                { text: "OK", onPress: () => {} }
-              ],
-              { cancelable: true })
+              Alert.alert(
+                "This does nothing.",
+                "Just there",
+                [{ text: "OK", onPress: () => {} }],
+                { cancelable: true }
+              )
             }
           />
         </View>
         <ScrollView
-          style={{ backgroundColor: "#fff" }}
           showsVerticalScrollIndicator={false}
           refreshControl={
             <RefreshControl
@@ -515,39 +143,34 @@ class Home extends React.Component {
             />
           }
         >
+          {/* Fight corona image below */}
           <View
             style={{
               flex: 1,
               flexDirection: "row-reverse",
               padding: 20,
               margin: 15,
+              alignItems: "center"
             }}
           >
-            <View
+            <Image
               style={{
-                flex: 1,
-                justifyContent: "flex-end",
+                width: SCREEN_WIDTH / 4,
+                height: SCREEN_WIDTH / 4,
+                borderTopLeftRadius: 20,
+                borderTopRightRadius: 20,
+                borderBottomLeftRadius: 20,
+                borderBottomRightRadius: 20,
               }}
-            >
-              <Image
-                style={{
-                  width: SCREEN_WIDTH / 6,
-                  height: SCREEN_WIDTH / 6,
-                  borderTopLeftRadius: 20,
-                  borderTopRightRadius: 20,
-                  borderBottomLeftRadius: 20,
-                  borderBottomRightRadius: 20,
-                }}
-                source={require("../assets/fightcorona.png")}
-              />
-            </View>
+              source={require("../assets/fightcorona.png")}
+            />
             <View style={{ flex: 3 }}>
-              <Text style={{ fontSize: 18, fontWeight: "600", color: "#444" }}>
+              <Text style={{ fontSize: 20, fontWeight: "600", color: "#444" }}>
                 Lets Fight Corona
               </Text>
               <Text
                 style={{
-                  fontSize: 15,
+                  fontSize: 17,
                   fontWeight: "300",
                   marginTop: 20,
                   color: "#555",
@@ -557,6 +180,7 @@ class Home extends React.Component {
               </Text>
             </View>
           </View>
+          {/* helpline button below */}
           <View
             style={{
               flexDirection: "row",
@@ -593,15 +217,65 @@ class Home extends React.Component {
               />
             </TouchableOpacity>
           </View>
+
           {this.state.isLoading || this.state.isGlobalDataLoading ? (
             <LoadingShimmer arr={[1, 2]} />
           ) : (
-            <View style={{ padding: SCREEN_WIDTH / 40 }}>
-              <this.renderIndiaDataCard />
-              <View style={{ minHeight: 10, maxHeight: 10 }}></View>
-              <this.renderGlobalDataCard />
+            <View>
+              <RenderCard
+                cardName={"India"}
+                totalConfirmed={this.state.indiaTotalData.confirmed}
+                totalActive={this.state.indiaTotalData.active}
+                totalRecovered={this.state.indiaTotalData.recovered}
+                deltaConfirmed={this.state.indiaTotalData.deltaconfirmed}
+                totalDeaths={this.state.indiaTotalData.deaths}
+                deltaDeaths={this.state.indiaTotalData.deltadeaths}
+                deltaRecovered={this.state.indiaTotalData.deltarecovered}
+                lastupdatedtime={this.state.indiaTotalData.lastupdatedtime}
+                buttonsData={[
+                  {
+                    name: "States Data",
+                    onPress: () =>
+                      this.props.navigation.navigate("IndianStates"),
+                  },
+                ]}
+              />
+              <RenderCard
+                cardName={"Global"}
+                totalConfirmed={this.state.globalData.confirmed}
+                totalActive={this.state.globalData.active}
+                totalRecovered={this.state.globalData.recovered}
+                deltaConfirmed={this.state.globalData.new_confirmed}
+                totalDeaths={this.state.globalData.deaths}
+                deltaDeaths={this.state.globalData.new_deaths}
+                deltaRecovered={this.state.globalData.new_recovered}
+                lastupdatedtime={new Date(
+                  this.state.globalData.updated_at
+                ).toDateString()}
+                buttonsData={[
+                  {
+                    name: "Global Data List",
+                    onPress: () =>
+                      this.props.navigation.navigate("CountriesScreen"),
+                  },
+                  {
+                    name: "Search Countries",
+                    onPress: () => {
+                      if (!this.state.isGlobalDataLoading) {
+                        const arrayOfCountries = Object.entries(
+                          this.state.countries
+                        ).map((e) => e[1]);
+                        this.props.navigation.navigate("CountrySearch", {
+                          countryData: arrayOfCountries,
+                        });
+                      }
+                    },
+                  },
+                ]}
+              />
             </View>
           )}
+          {/* Stay home image below */}
           <View
             style={{
               padding: 20,
@@ -623,175 +297,6 @@ class Home extends React.Component {
               }}
               source={require("../assets/stay_home.png")}
             />
-            <View
-              style={{
-                flex: 1,
-                flexDirection: "row-reverse",
-              }}
-            >
-              <View
-                style={{
-                  flex: 1,
-                  justifyContent: "flex-end",
-                  marginLeft: SCREEN_WIDTH / 6,
-                  marginTop: 0,
-                }}
-              >
-                <Image
-                  style={{
-                    // marginLeft: SCREEN_WIDTH / 40,
-
-                    //   marginRight: SCREEN_WIDTH / 40,
-                    width: SCREEN_WIDTH / 4,
-                    height: SCREEN_WIDTH / 4,
-                    borderTopLeftRadius: 20,
-                    borderTopRightRadius: 20,
-                    borderBottomLeftRadius: 20,
-                    borderBottomRightRadius: 20,
-                    // overflow: "hidden",
-                  }}
-                  source={require("../assets/mask.png")}
-                />
-              </View>
-              <View style={{ flex: 2 }}>
-                <Text
-                  style={{
-                    fontSize: 17,
-                    fontWeight: "300",
-                    marginTop: 20,
-                    color: "#555",
-                  }}
-                >
-                  Always wear a mask when going outside.
-                </Text>
-              </View>
-            </View>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: "row-reverse",
-              }}
-            >
-              <View
-                style={{
-                  flex: 1,
-                  justifyContent: "flex-end",
-                  marginLeft: SCREEN_WIDTH / 6,
-                  marginTop: 0,
-                }}
-              >
-                <Image
-                  style={{
-                    width: SCREEN_WIDTH / 4,
-                    height: SCREEN_WIDTH / 4,
-                    borderTopLeftRadius: 20,
-                    borderTopRightRadius: 20,
-                    borderBottomLeftRadius: 20,
-                    borderBottomRightRadius: 20,
-                    // overflow: "hidden",
-                  }}
-                  source={require("../assets/wash.png")}
-                />
-              </View>
-              <View style={{ flex: 2 }}>
-                <Text
-                  style={{
-                    fontSize: 17,
-                    fontWeight: "300",
-                    marginTop: 20,
-                    color: "#555",
-                  }}
-                >
-                  Wash your hands for 20 seconds every hour...
-                </Text>
-              </View>
-            </View>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: "row-reverse",
-              }}
-            >
-              <View
-                style={{
-                  flex: 1,
-                  justifyContent: "flex-end",
-                  marginLeft: SCREEN_WIDTH / 6,
-                  marginTop: 0,
-                }}
-              >
-                <Image
-                  style={{
-                    marginLeft: 0,
-
-                    marginRight: SCREEN_WIDTH / 20,
-                    width: SCREEN_WIDTH / 4,
-                    height: SCREEN_WIDTH / 4,
-                    borderTopLeftRadius: 20,
-                    borderTopRightRadius: 20,
-                    borderBottomLeftRadius: 20,
-                    borderBottomRightRadius: 20,
-                    // overflow: "hidden",
-                  }}
-                  source={require("../assets/soap.png")}
-                />
-              </View>
-              <View style={{ flex: 2 }}>
-                <Text
-                  style={{
-                    fontSize: 17,
-                    fontWeight: "300",
-                    marginTop: 20,
-                    color: "#555",
-                  }}
-                >
-                  With soap...
-                </Text>
-              </View>
-            </View>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: "row-reverse",
-              }}
-            >
-              <View
-                style={{
-                  flex: 1,
-                  justifyContent: "flex-end",
-                  marginLeft: SCREEN_WIDTH / 6,
-                  marginTop: 0,
-                }}
-              >
-                <Image
-                  style={{
-                    // marginLeft: SCREEN_WIDTH / 20,
-
-                    marginRight: SCREEN_WIDTH / 20,
-                    width: SCREEN_WIDTH / 4,
-                    height: SCREEN_WIDTH / 4,
-                    borderTopLeftRadius: 20,
-                    borderTopRightRadius: 20,
-                    borderBottomLeftRadius: 20,
-                    borderBottomRightRadius: 20,
-                    // overflow: "hidden",
-                  }}
-                  source={require("../assets/liquidsoap.png")}
-                />
-              </View>
-              <View style={{ flex: 2 }}>
-                <Text
-                  style={{
-                    fontSize: 17,
-                    fontWeight: "300",
-                    marginTop: 20,
-                    color: "#555",
-                  }}
-                >
-                  or with alcohol based hand sanitizers.
-                </Text>
-              </View>
-            </View>
             <View style={{ minHeight: 40 }}></View>
           </View>
         </ScrollView>

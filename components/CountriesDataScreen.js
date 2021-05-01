@@ -10,6 +10,7 @@ import { SCREEN_WIDTH } from "../shared/styles";
 import { Icon } from "react-native-elements";
 import { countryDataLink } from "./apis";
 import LoadingShimmer from "../shared/LoadingShimmer";
+import RenderCard from "../shared/RenderCard";
 
 export default class Countries extends React.Component {
   constructor(props) {
@@ -43,7 +44,6 @@ export default class Countries extends React.Component {
   };
 
   render() {
-    const { search } = this.state;
     const arrayOfCountries = Object.entries(this.state.countries).map(
       (e) => e[1]
     );
@@ -104,138 +104,21 @@ export default class Countries extends React.Component {
             pro
             renderItem={({ item, index }) => {
               return (
-                <View
-                  style={{
-                    backgroundColor: "#e1e8ee",
-                    minWidth: (SCREEN_WIDTH / 40) * 38,
-                    borderRadius: 20,
-                    padding: 10,
-                    margin: SCREEN_WIDTH / 40,
-                  }}
+                <RenderCard
+                  cardName={item.name}
+                  totalConfirmed={item.latest_data.confirmed}
+                  totalActive={
+                    item.latest_data.confirmed -
+                    item.latest_data.recovered -
+                    item.latest_data.deaths
+                  }
+                  totalRecovered={item.latest_data.recovered}
+                  deltaConfirmed={item.today.confirmed}
+                  totalDeaths={item.latest_data.deaths}
+                  deltaDeaths={item.today.deaths}
+                  deltaRecovered={item.latest_data.recovered}
+                  hideSegmentedBar
                 >
-                  <Text
-                    style={{
-                      // color: "#fdfdfd",
-                      fontSize: 20,
-                      fontWeight: "400",
-                      paddingLeft: 10,
-                      color: "#111",
-                    }}
-                  >
-                    {item.name}
-                    {"\n"}
-                    <Text style={{ fontWeight: "700" }}>
-                      Total Cases {item.latest_data.confirmed}
-                    </Text>
-                  </Text>
-                  <View style={{ flex: 1, flexDirection: "row" }}>
-                    <View
-                      style={{
-                        flex: 2,
-                        marginTop: 15,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        backgroundColor: "#fff",
-                        padding: 10,
-                        borderRadius: 10,
-                        margin: 8,
-                      }}
-                    >
-                      <View
-                        style={{
-                          flex: 1,
-                          flexDirection: "column",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        <View style={{ flex: 1 }}>
-                          <Text style={{ color: "#000" }}>Active</Text>
-                        </View>
-                        <View style={{ flex: 1 }}>
-                          <Text style={{ color: "#ff8585", fontSize: 25 }}>
-                            {item.latest_data.confirmed -
-                              item.latest_data.recovered -
-                              item.latest_data.deaths}
-                          </Text>
-                        </View>
-                        <View style={{ flex: 1 }}>
-                          <Text style={{ color: "#ff8585" }}>
-                            + {item.today.confirmed} ↑
-                          </Text>
-                        </View>
-                      </View>
-                    </View>
-                    <View
-                      style={{
-                        flex: 2,
-                        marginTop: 15,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        backgroundColor: "#fff",
-                        borderRadius: 10,
-                        padding: 10,
-                        margin: 8,
-                      }}
-                    >
-                      <View
-                        style={{
-                          flex: 1,
-                          flexDirection: "column",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        <View style={{ flex: 1 }}>
-                          <Text style={{ color: "#000" }}>Casualty</Text>
-                        </View>
-                        <View style={{ flex: 1 }}>
-                          <Text style={{ color: "#000", fontSize: 25 }}>
-                            {item.latest_data.deaths}
-                          </Text>
-                        </View>
-                        <View style={{ flex: 1 }}>
-                          <Text style={{ color: "#404040" }}>
-                            + {item.today.deaths} ↑
-                          </Text>
-                        </View>
-                      </View>
-                    </View>
-
-                    <View
-                      style={{
-                        flex: 2,
-                        marginTop: 15,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        backgroundColor: "#fff",
-                        padding: 10,
-                        borderRadius: 10,
-                        margin: 8,
-                      }}
-                    >
-                      <View
-                        style={{
-                          flex: 1,
-                          flexDirection: "column",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        <View style={{ flex: 1 }}>
-                          <Text style={{ color: "#000" }}>Recovered</Text>
-                        </View>
-                        <View style={{ flex: 1 }}>
-                          <Text style={{ color: "#1e72fa", fontSize: 25 }}>
-                            {item.latest_data.recovered}
-                          </Text>
-                        </View>
-                        <View style={{ flex: 1 }}>
-                          <Text style={{ color: "#1e72fa" }}>{""}</Text>
-                        </View>
-                      </View>
-                    </View>
-                  </View>
                   <View style={{ flex: 1, flexDirection: "column" }}>
                     <Text
                       style={{ padding: 10, paddingTop: 15, color: "#111" }}
@@ -262,11 +145,13 @@ export default class Countries extends React.Component {
                       ).toFixed(2)}
                     </Text>
                   </View>
-                </View>
+                </RenderCard>
               );
             }}
           />
-        ) : <LoadingShimmer arr={[1, 2, 3, 4, 5, 6, 7]} />}
+        ) : (
+          <LoadingShimmer arr={[1, 2, 3, 4, 5, 6, 7]} />
+        )}
       </SafeAreaView>
     );
   }
